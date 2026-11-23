@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080e15">
+  <meta name="description" content="在四座线上全景展馆中探索 CES 2026 的机器人、未来显示、智慧出行与穿戴科技。">
+  <title>CES 2026 国际消费电子展 · 线上沉浸式 VR 展厅</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080e15'/%3E%3Cpath d='M6 23l5-15h16l-1 4H15l-2 7h12l-2 4z' fill='%23c6ff60'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="vendor/core.css">
+  <link rel="stylesheet" href="vendor/markers.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="vendor/three.js"></script>
+  <script defer src="vendor/core.js"></script>
+  <script defer src="vendor/markers.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-orbit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-30 12 12)"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5m6 0h5v5m0 6v5h-5m-6 0H4v-5"/></symbol>
+    <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zm6-3v15m6-12v15"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-mouse" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 5v4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0z"/><circle cx="12" cy="10" r="2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></symbol>
+  </svg>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true">CES<span></span></span><div><h1>CES 2026 国际消费电子展</h1><div class="brand-meta"><span>线上沉浸式 VR 展厅</span><b>/</b><span id="crumb">序厅总览</span></div></div></div>
+    <div class="toolbar" aria-label="全景工具">
+      <button id="cruise" class="tool cruise" aria-label="自动巡航" aria-pressed="false" title="自动巡航"><svg><use href="#i-orbit"/></svg><span>自动巡航</span><i class="switch"></i></button>
+      <button id="reset" class="tool square" aria-label="重置初始视角" title="重置初始视角"><svg><use href="#i-reset"/></svg></button>
+      <button id="full" class="tool square" aria-label="全屏切换" title="全屏切换" aria-pressed="false"><svg><use href="#i-full"/></svg></button>
+      <button id="pick" class="tool" aria-label="取点模式（快捷键 D）" title="取点模式（D）" aria-pressed="false"><svg><use href="#i-cross"/></svg><span>取点模式</span><kbd>D</kbd></button>
+    </div>
+  </header>
+  <main id="stage" aria-label="沉浸式展馆">
+    <div id="viewer" tabindex="0" aria-label="全景画面，可拖动或使用方向键环顾"></div>
+    <div class="vignette"></div>
+    <div id="travel-shade" aria-hidden="true"></div>
+    <section class="scene-heading" aria-live="polite">
+      <div class="eyebrow"><i></i> VIRTUAL EXHIBITION <b>/</b> HALL <span id="hall-number">01</span></div>
+      <h2 id="hall-name">序厅总览</h2>
+      <p id="theme">AI 融入物理世界</p>
+    </section>
+    <div class="compass" aria-label="视角朝向">
+      <span class="north">N</span><span class="east">E</span><span class="west">W</span><span class="south">S</span>
+      <div class="dial"><i id="needle"></i></div><output id="bearing">000°</output>
+    </div>
+    <aside id="floor-map" class="glass" aria-label="展馆平面图">
+      <button id="map-toggle" aria-expanded="true" aria-controls="map-plan"><svg><use href="#i-map"/></svg>CES 2026 展馆平面图<svg class="fold-icon"><use href="#i-down"/></svg></button>
+      <svg id="map-plan" viewBox="0 0 252 130" role="group" aria-label="四馆连通示意图，选择展馆即可前往">
+        <defs>
+          <pattern id="map-grid" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0H0V12" fill="none" stroke="#83b9be" stroke-opacity=".12"/></pattern>
+          <radialGradient id="radar-glow" cx="50%" cy="100%" r="100%"><stop stop-color="#c9ff80" stop-opacity=".85"/><stop offset="1" stop-color="#a3ff70" stop-opacity=".16"/></radialGradient>
+        </defs>
+        <rect width="252" height="130" fill="url(#map-grid)"/>
+        <g class="map-corridors"><path d="M40 39H207M40 39V78L92 104H127L207 78V39M40 39L127 62L207 39M127 62V104"/></g>
+        <g class="map-rooms"><path d="M15 24H54L67 34V51H24L15 43Z"/><path d="M180 24H222L236 33V52H189L180 44Z"/><path d="M99 50H143L154 60V74H111L99 65Z"/><path d="M99 93H145L154 103V116H108L99 107Z"/></g>
+        <g id="radar-origin" pointer-events="none" aria-hidden="true"><g id="radar-beam"><path d="M0 0L-17 -23A29 29 0 0 1 17 -23Z" fill="url(#radar-glow)" stroke="#baff79" stroke-width=".8"/><path d="M0 -3V-28" stroke="#d6ff99" stroke-dasharray="2 2"/></g></g>
+        <g class="map-point" data-hall="hall_robotics" transform="translate(40 39)" role="button" tabindex="0" aria-label="前往物理AI与机器人馆"><rect x="-30" y="-17" width="60" height="40"/><circle r="4"/><text y="27">机器人馆</text></g>
+        <g class="map-point" data-hall="hall_display" transform="translate(207 39)" role="button" tabindex="0" aria-label="前往未来显示与端侧AI馆"><rect x="-36" y="-17" width="72" height="40"/><circle r="4"/><text y="27">未来显示馆</text></g>
+        <g class="map-point" data-hall="hall_intro" transform="translate(127 62)" role="button" tabindex="0" aria-label="前往序厅总览"><rect x="-27" y="-16" width="54" height="38"/><circle r="4"/><text y="22">序厅</text></g>
+        <g class="map-point" data-hall="hall_mobility" transform="translate(127 104)" role="button" tabindex="0" aria-label="前往智慧出行与穿戴科技馆"><rect x="-42" y="-15" width="84" height="38"/><circle r="4"/><text y="22">出行与穿戴馆</text></g>
+        <text x="9" y="12" class="map-north">↑ N</text>
+      </svg>
+    </aside>
+    <aside id="picker" hidden class="glass">
+      <div class="picker-title"><svg><use href="#i-cross"/></svg>热点取点</div>
+      <p id="pick-hint">点击全景画面记录坐标</p>
+      <div class="coords"><span>yaw <output id="yaw">—</output></span><span>pitch <output id="pitch">—</output></span></div>
+      <button id="copy" disabled>复制热点 JSON</button><textarea id="manual-copy" hidden aria-label="可手动复制的热点 JSON" readonly></textarea>
+    </aside>
+    <div class="stage-base"><span class="live"><i></i>全景漫游 <b>/</b> <em>360°</em></span><span class="gesture"><svg><use href="#i-mouse"/></svg><span class="desktop-hint">拖动环顾 <b>·</b> 滚轮缩放</span><span class="mobile-hint">滑动环顾</span></span></div>
+    <div id="status" class="status" role="status">正在进入展厅…</div>
+  </main>
+  <nav class="directory" aria-label="展馆导航">
+    <div class="dir-head"><h2><svg><use href="#i-map"/></svg>展馆导航 <small>HALL DIRECTORY</small></h2>
+      <button id="collapse" aria-expanded="true" aria-controls="cards"><span>收起</span><svg><use href="#i-down"/></svg></button></div>
+    <div id="cards" class="cards"></div>
+  </nav>
+  <footer id="icp-footer" class="icp-footer" hidden>
+    <a id="icp-number" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer"></a>
+  </footer>
+  <dialog id="detail" aria-labelledby="detail-title">
+    <div class="detail-shell"><button id="close" class="square" title="关闭详情" aria-label="关闭详情"><svg><use href="#i-close"/></svg></button>
+    <div id="media"><img id="photo" alt="" hidden><div id="placeholder"><span id="placeholder-code"></span><strong id="placeholder-name"></strong></div></div>
+    <div class="detail-body"><small id="detail-brand"></small><h2 id="detail-title"></h2><div id="tags"></div><p id="description"></p>
+      <div class="detail-actions"><button id="narrate" class="tool" type="button">AI 语音讲解</button><a id="source" target="_blank" rel="noopener noreferrer">品牌资料 ↗</a></div>
+      <p id="speech-note" role="status" hidden></p></div></div>
+  </dialog>
+</body>
+</html>

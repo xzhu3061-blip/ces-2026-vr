@@ -1,0 +1,190 @@
+{
+  "scenes": [
+    {
+      "id": "hall_intro",
+      "name": "序厅总览",
+      "english": "Grand Atrium",
+      "theme": "AI 融入物理世界",
+      "panorama": "assets/panos/hall_intro.webp",
+      "initialView": { "yaw": 0, "pitch": 0, "zoom": 40 },
+      "hotspots": [
+        { "id": "intro-to-robotics", "type": "jump", "label": "物理AI与机器人馆", "target": "hall_robotics", "yaw": -0.72, "pitch": -0.19 },
+        { "id": "intro-to-display", "type": "jump", "label": "未来显示与端侧AI馆", "target": "hall_display", "yaw": 0.72, "pitch": -0.19 },
+        { "id": "intro-to-mobility", "type": "jump", "label": "智慧出行与穿戴科技馆", "target": "hall_mobility", "yaw": 2.0, "pitch": -0.19 },
+        {
+          "id": "intro-trends",
+          "type": "info",
+          "label": "CES 2026 趋势展板",
+          "yaw": 0.0,
+          "pitch": 0.02,
+          "brand": "CES 2026 · 主题展板",
+          "title": "AI 融入物理世界",
+          "highlight": "机器人、端侧 AI 与智能座舱，把计算带进日常物理空间。",
+          "tags": ["Physical AI", "端侧算力", "人机交互"],
+          "description": "怎样让机器稳稳抓起一个零件，或让一台电脑在本地处理声音与图像？2026 年 1 月，拉斯维加斯的 CES 把这些问题带到了展台。沿着地面箭头走进机器人馆，可以看到机械关节和传感器怎样配合工作。再到显示与端侧 AI 馆观察光与芯片，最后坐进智能座舱，看看计算如何融入一次出行和一段日常对话。",
+          "image": "",
+          "source": "https://www.ces.tech/press-releases/ces-2026-the-future-is-here"
+        }
+      ]
+    },
+    {
+      "id": "hall_robotics",
+      "name": "物理AI与机器人馆",
+      "english": "Physical AI & Robotics",
+      "panorama": "assets/panos/hall_robotics.webp",
+      "initialView": { "yaw": 0, "pitch": 0, "zoom": 40 },
+      "hotspots": [
+        {
+          "id": "robotics-atlas",
+          "type": "info",
+          "label": "Atlas 人形机器人",
+          "yaw": -0.72,
+          "pitch": 0.02,
+          "brand": "Boston Dynamics · 波士顿动力",
+          "title": "波士顿动力新版 Atlas 人形机器人",
+          "highlight": "全电动 Atlas 用可转动的躯干和双臂在紧凑工位上搬运零件。",
+          "tags": ["Physical AI", "全电驱动", "工业机器人"],
+          "description": "CES 2026 上，波士顿动力公布了面向工业现场的全电动 Atlas。搬运零件时，机器人可以转动躯干调整朝向，再用双臂伸入货架。全身 56 个自由度让它能够在紧凑工位上完成连续动作。电量不足时，Atlas 可以自行前往换电站更换电池，再回到工作位置。",
+          "image": "assets/exhibits/atlas.jpg",
+          "source": "https://bostondynamics.com/blog/boston-dynamics-unveils-new-atlas-robot-to-revolutionize-industry/"
+        },
+        {
+          "id": "robotics-cyber-x",
+          "type": "info",
+          "label": "Cyber X 爬楼系统",
+          "yaw": 0,
+          "pitch": 0.02,
+          "brand": "Dreame · 追觅",
+          "title": "追觅爬楼梯扫地机器人",
+          "highlight": "Cyber X 利用 3D ToF 感知台阶，协助扫地机器人跨楼层作业。",
+          "tags": ["Cyber X", "3D ToF", "跨楼层清洁"],
+          "description": "复式住宅里，两层地板之间的一段楼梯就能中断清扫。追觅展示的 Cyber X 通过独立的 3D ToF 视觉系统感知台阶，由自适应爬楼机构完成楼层间的转移。整套方案把楼梯通行和地面清洁分开处理，还设计了随行水箱，方便扫地机器人抵达另一层后继续拖地。",
+          "image": "assets/exhibits/dreame_robot.jpg",
+          "source": "https://ca.dreametech.com/pages/ces-2026"
+        },
+        {
+          "id": "robotics-onero",
+          "type": "info",
+          "label": "Onero H1 家务机器人",
+          "yaw": 0.72,
+          "pitch": 0.02,
+          "brand": "SwitchBot",
+          "title": "SwitchBot 家务机器人 Onero H1",
+          "highlight": "Onero H1 结合视觉、深度与触感，协调双臂处理家务。",
+          "tags": ["具身智能", "触觉反馈", "端侧 VLA"],
+          "description": "把手伸向门把手，需要先看清位置，再判断什么时候已经握牢。Onero H1 将图像、深度和接触反馈结合起来，借助机身内运行的 OmniSense VLA 模型协调机械臂。它拥有 22 个自由度，瞄准抓取、推拉、开合和整理等家庭任务，让同一套机械结构适应形状各异的日用品。",
+          "image": "assets/exhibits/switchbot_onero.jpg",
+          "source": "https://www.prnewswire.com/news-releases/switchbot-demonstrates-smart-home-2-0-powered-by-ai-robotics-at-ces-2026--302652014.html"
+        },
+        { "id": "robotics-to-intro", "type": "jump", "label": "返回序厅", "target": "hall_intro", "yaw": -2.35, "pitch": -0.22 },
+        { "id": "robotics-to-display", "type": "jump", "label": "未来显示与端侧AI馆", "target": "hall_display", "yaw": 1.55, "pitch": -0.22 }
+      ]
+    },
+    {
+      "id": "hall_display",
+      "name": "未来显示与端侧AI馆",
+      "english": "Future Displays & Edge AI",
+      "panorama": "assets/panos/hall_display.webp",
+      "initialView": { "yaw": 0, "pitch": 0, "zoom": 40 },
+      "hotspots": [
+        {
+          "id": "display-116uxs",
+          "type": "info",
+          "label": "116UXS RGB MiniLED",
+          "yaw": -0.72,
+          "pitch": 0.02,
+          "brand": "Hisense · 海信",
+          "title": "海信 116UXS RGB MiniLED 电视",
+          "highlight": "海信在 RGB 背光中加入青色，让蓝绿过渡更细腻。",
+          "tags": ["RGB MiniLED", "四色背光", "116 英寸"],
+          "description": "在这块 116 英寸屏幕背后，RGB MiniLED evo 在红、绿、蓝三种光源之外加入了青色。表现一片海水时，背光系统由此多了一种可以直接调节的颜色。Hi-View AI Engine RGB 配合背光控制来重现色调之间的渐变，适合对照观察水面从蓝色过渡到浅青色时的层次。",
+          "image": "assets/exhibits/hisense_tv.jpg",
+          "source": "https://www.hisense-usa.com/ces-2026/tv-2026"
+        },
+        {
+          "id": "display-micro-rgb",
+          "type": "info",
+          "label": "Micro RGB 显示技术",
+          "yaw": 0,
+          "pitch": 0.02,
+          "brand": "Samsung · 三星",
+          "title": "三星 Micro RGB 显示技术",
+          "highlight": "微型红绿蓝 LED 独立供光，兼顾明亮招牌与暗部细节。",
+          "tags": ["Micro RGB", "三色背光", "HDR"],
+          "description": "三星在展会上用 130 英寸级 R95H 演示 Micro RGB 技术。屏幕背后的微型红、绿、蓝 LED 提供三色光源，图像处理引擎再根据画面调整色彩和对比度。夜景尤其适合观察这种配合：灯牌需要鲜明的色彩，旁边的暗巷还得保留纹理。显示表面的防眩光处理则减轻了环境光反射的干扰。",
+          "image": "assets/exhibits/samsung_rgb.jpg",
+          "source": "https://news.samsung.com/us/samsung-unveils-worlds-first-130-inch-class-micro-rgb-tv-next-generation-color-bold-new-design/"
+        },
+        {
+          "id": "display-core-ultra",
+          "type": "info",
+          "label": "第三代酷睿 Ultra",
+          "yaw": 0.72,
+          "pitch": 0.02,
+          "brand": "Intel · 英特尔",
+          "title": "英特尔第三代酷睿 Ultra AI PC",
+          "highlight": "CPU、GPU 和 NPU 分工，让视频会议的 AI 效果在本机运行。",
+          "tags": ["端侧算力", "Intel 18A", "NPU"],
+          "description": "代号 Panther Lake 的第三代酷睿 Ultra 在 CES 2026 正式亮相，计算芯片采用 Intel 18A 制程。以视频会议为例，CPU 可以运行会议应用，GPU 负责图形显示，支持 NPU 的软件则能把部分 AI 效果交给专用单元处理。高配型号的 NPU 可达 50 TOPS，为本地推理提供了独立的计算资源。",
+          "image": "assets/exhibits/intel_aipc.jpg",
+          "source": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/ces-2026-intel-core-ultra-series-3-debut-first-built-on-intel-18a.html"
+        },
+        { "id": "display-to-intro", "type": "jump", "label": "返回序厅", "target": "hall_intro", "yaw": -2.35, "pitch": -0.22 },
+        { "id": "display-to-mobility", "type": "jump", "label": "智慧出行与穿戴科技馆", "target": "hall_mobility", "yaw": 1.55, "pitch": -0.22 }
+      ]
+    },
+    {
+      "id": "hall_mobility",
+      "name": "智慧出行与穿戴科技馆",
+      "english": "Mobility & Wearables",
+      "panorama": "assets/panos/hall_mobility.webp",
+      "initialView": { "yaw": 0, "pitch": 0, "zoom": 40 },
+      "hotspots": [
+        {
+          "id": "mobility-snapdragon",
+          "type": "info",
+          "label": "骁龙座舱至尊版",
+          "yaw": -0.72,
+          "pitch": 0.02,
+          "brand": "Qualcomm · 高通",
+          "title": "高通骁龙座舱至尊版跨域平台",
+          "highlight": "乘客的语音指令和仪表图形，由高性能座舱平台协同处理。",
+          "tags": ["智能座舱", "车端 AI", "跨域计算"],
+          "description": "一辆汽车要同时处理乘客的语音指令、仪表图形和道路感知。高通在 CES 2026 介绍了骁龙数字底盘的多种计算方案。Cockpit Elite 面向高性能座舱，承担显示、交互和车端 AI 工作。在需要把座舱与辅助驾驶整合到同一颗芯片的方案中，高通提供 Ride Flex，让不同安全等级的任务共享计算硬件。",
+          "image": "assets/exhibits/qualcomm_cockpit.jpg",
+          "source": "https://www.qualcomm.com/news/releases/2026/01/qualcomm-drives-the-future-of-mobility-with-strong-snapdragon-di"
+        },
+        {
+          "id": "mobility-afeela",
+          "type": "info",
+          "label": "AFEELA 1 智能电动车",
+          "yaw": 0,
+          "pitch": 0.02,
+          "brand": "Sony Honda Mobility",
+          "title": "Sony Honda Afeela 智能电动轿跑",
+          "highlight": "AFEELA 1 将智能助手、座舱显示和影音娱乐融入车内体验。",
+          "tags": ["AFEELA 1", "智能座舱", "辅助驾驶"],
+          "description": "CES 2026 展出的 AFEELA 1 是在俄亥俄州工厂试制的预生产轿车。驾驶者可以通过车载智能助手与车辆交流，乘客则能使用座舱显示器和音响体验应用与娱乐内容。发布会现场还有一辆单独命名的 AFEELA Prototype 2026，展示了车内空间进一步扩展的另一种车身方案。",
+          "image": "assets/exhibits/afeela_car.jpg",
+          "source": "https://www.shm-afeela.com/en/assets/pdf/260106%E2%80%97CES2026%E2%80%97ENG.pdf"
+        },
+        {
+          "id": "mobility-notepin",
+          "type": "info",
+          "label": "Plaud NotePin",
+          "yaw": 0.72,
+          "pitch": 0.02,
+          "brand": "Plaud",
+          "title": "Plaud AI NotePin 随身硬件",
+          "highlight": "NotePin 把随身录音转成可查阅的文字与摘要。",
+          "tags": ["可穿戴", "语音转写", "AI 摘要"],
+          "description": "这枚胶囊形记录器可以夹在衣襟上，在对方知情同意后收录面对面的交流。录音同步至配套服务后，可以转写为文字，再整理成摘要。NotePin 系列的 S 款增加了实体录音键和按键标重点功能：在访谈中听到想追问的一句话，伸手做个标记，整理时就有了回看线索。",
+          "image": "assets/exhibits/plaud_notepin.jpg",
+          "source": "https://support.plaud.ai/hc/en-us/articles/53770668740761-What-is-the-difference-between-Plaud-NotePin-and-NotePin-S"
+        },
+        { "id": "mobility-to-intro", "type": "jump", "label": "返回序厅", "target": "hall_intro", "yaw": -2.35, "pitch": -0.22 },
+        { "id": "mobility-to-robotics", "type": "jump", "label": "物理AI与机器人馆", "target": "hall_robotics", "yaw": 1.55, "pitch": -0.22 }
+      ]
+    }
+  ]
+}
