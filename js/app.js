@@ -5,12 +5,19 @@ const stage = byId("stage");
 const viewport = byId("viewer");
 const detail = byId("detail");
 const tau = 2 * Math.PI;
+const minPanoramaWidth = 4096;
+const lens = { minFov: 55, maxFov: 95, planetFov: 148, defaultZoom: 40 };
 const motionReduced = matchMedia("(prefers-reduced-motion: reduce)");
 const tones = ["#c3fc69", "#6be6e4", "#b4a2ff", "#ffbf76"];
 const generatedImages = new Map();
 const photoTextures = new Map();
 let scenes = [], current = null, engine = null, busy = false, queuedScene = null;
 let cruising = false, picking = false, selection = null, statusTimer = 0;
+
+function verticalFov(zoom, planet = 0) {
+  return lens.maxFov - (lens.maxFov - lens.minFov) * zoom / 100 +
+    (lens.planetFov - lens.maxFov) * planet;
+}
 
 function notice(message, duration = 0) {
   clearTimeout(statusTimer);
@@ -70,7 +77,8 @@ function makeSphereViewer() {
   if (!window.THREE || !Plugin) return null;
   const viewer = new PhotoSphereViewer.Viewer({
     container: viewport, navbar: false, plugins: [Plugin], keyboard: false,
-    defaultYaw: 0, defaultPitch: 0, minFov: 30, maxFov: 95,
+    defaultYaw: 0, defaultPitch: 0, defaultZoomLvl: lens.defaultZoom,
+    minFov: lens.minFov, maxFov: lens.maxFov,
     mousewheel: true, touchmoveTwoFingers: false, loadingTxt: "正在生成视图…",
     adapter: [PhotoSphereViewer.EquirectangularAdapter, { useXmpData: false }]
   });
@@ -116,12 +124,12 @@ function makeSphereViewer() {
     setPose(pose, planet = 0) {
       if (wideLens !== (planet > 0)) {
         wideLens = planet > 0;
-        viewer.setOption("maxFov", wideLens ? 148 : 95);
+        viewer.setOption("maxFov", wideLens ? lens.planetFov : lens.maxFov);
       }
       // At the opposite surface of the sphere the camera approaches stereographic projection.
       if (viewer.config.fisheye || planet) viewer.setOption("fisheye", 1.96 * planet);
-      const fov = 95 - .65 * pose.zoom + 53 * planet;
-      viewer.zoom(wideLens ? 100 * (148 - fov) / 118 : pose.zoom);
+      const fov = verticalFov(pose.zoom, planet);
+      viewer.zoom(wideLens ? 100 * (lens.planetFov - fov) / (lens.planetFov - lens.minFov) : pose.zoom);
       viewer.rotate(pose);
     },
     rotate: position => viewer.rotate(position),
@@ -154,10 +162,10 @@ function makeCanvasViewer() {
   overlay.className = "surface-marks";
   viewport.replaceChildren(canvas, overlay);
   const ctx = canvas.getContext("2d", { alpha: false });
-  let pixels, imageWidth, imageHeight, frame, view = { yaw: 0, pitch: 0, zoom: 40 };
+  let pixels, imageWidth, imageHeight, frame, view = { yaw: 0, pitch: 0, zoom: lens.defaultZoom };
   let spots = [], raf = 0, drag = null, planet = 0;
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
-  const focal = h => h / (2 * Math.tan((95 - view.zoom * .65 + 53 * planet) * Math.PI / 360));
+  const focal = h => h / (2 * Math.tan(verticalFov(view.zoom, planet) * Math.PI / 360));
   function camera() {
     return { sy: Math.sin(view.yaw), cy: Math.cos(view.yaw), sp: Math.sin(view.pitch), cp: Math.cos(view.pitch) };
   }
@@ -248,7 +256,8 @@ function makeCanvasViewer() {
     async load(url, scene, crossfade = true) {
       const img = await loadImage(url);
       const texture = document.createElement("canvas");
-      imageWidth = texture.width = Math.min(4096, img.naturalWidth);
+      // The CPU fallback keeps a full RGBA raster in memory.
+      imageWidth = texture.width = Math.min(minPanoramaWidth, img.naturalWidth);
       imageHeight = texture.height = Math.max(1, Math.round(img.naturalHeight * imageWidth / img.naturalWidth));
       const g = texture.getContext("2d", { willReadFrequently: true });
       g.drawImage(img, 0, 0, imageWidth, imageHeight);
@@ -271,7 +280,7 @@ function makeCanvasViewer() {
 async function generatedUrl(scene) {
   if (generatedImages.has(scene.id)) return generatedImages.get(scene.id);
   const canvas = createHallPanorama(scene, scenes.indexOf(scene));
-  const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", .94));
+  const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", .98));
   if (!blob) throw new Error("全景图编码失败");
   const url = URL.createObjectURL(blob);
   canvas.width = canvas.height = 1;
@@ -281,7 +290,9 @@ async function generatedUrl(scene) {
 
 async function preprocessPanorama(image) {
   const canvas = document.createElement("canvas");
-  const width = canvas.width = 4096, height = canvas.height = 2048;
+  // Round odd widths up by one pixel so the normalized texture stays exactly 2:1.
+  const width = canvas.width = Math.max(minPanoramaWidth, Math.ceil(image.naturalWidth / 2) * 2);
+  const height = canvas.height = width / 2;
   const ctx = canvas.getContext("2d", { alpha: false, willReadFrequently: true });
   try {
     ctx.imageSmoothingQuality = "high";
