@@ -46,6 +46,8 @@
           "tags": ["Physical AI", "全电驱动", "工业机器人"],
           "description": "CES 2026 上，波士顿动力公布了面向工业现场的全电动 Atlas。搬运零件时，机器人可以转动躯干调整朝向，再用双臂伸入货架。全身 56 个自由度让它能够在紧凑工位上完成连续动作。电量不足时，Atlas 可以自行前往换电站更换电池，再回到工作位置。",
           "image": "assets/exhibits/atlas.jpg",
+          "imageExtra": "assets/exhibits/atlas-extra.jpg",
+          "imageExtraSource": "https://bostondynamics.com/products/atlas",
           "source": "https://bostondynamics.com/blog/boston-dynamics-unveils-new-atlas-robot-to-revolutionize-industry/"
         },
         {
@@ -60,6 +62,7 @@
           "tags": ["Cyber X", "3D ToF", "跨楼层清洁"],
           "description": "复式住宅里，两层地板之间的一段楼梯就能中断清扫。追觅展示的 Cyber X 通过独立的 3D ToF 视觉系统感知台阶，由自适应爬楼机构完成楼层间的转移。整套方案把楼梯通行和地面清洁分开处理，还设计了随行水箱，方便扫地机器人抵达另一层后继续拖地。",
           "image": "assets/exhibits/dreame_robot.jpg",
+          "model3d": "assets/models/dreame-cyber-x.glb",
           "source": "https://ca.dreametech.com/pages/ces-2026"
         },
         {
@@ -74,6 +77,7 @@
           "tags": ["具身智能", "触觉反馈", "端侧 VLA"],
           "description": "把手伸向门把手，需要先看清位置，再判断什么时候已经握牢。Onero H1 将图像、深度和接触反馈结合起来，借助机身内运行的 OmniSense VLA 模型协调机械臂。它拥有 22 个自由度，瞄准抓取、推拉、开合和整理等家庭任务，让同一套机械结构适应形状各异的日用品。",
           "image": "assets/exhibits/switchbot_onero.jpg",
+          "model3d": "assets/models/switchbot-onero.glb",
           "source": "https://www.prnewswire.com/news-releases/switchbot-demonstrates-smart-home-2-0-powered-by-ai-robotics-at-ces-2026--302652014.html"
         },
         { "id": "robotics-to-intro", "type": "jump", "label": "返回序厅", "target": "hall_intro", "yaw": -2.35, "pitch": -0.22 },
@@ -99,6 +103,8 @@
           "tags": ["RGB MiniLED", "四色背光", "116 英寸"],
           "description": "在这块 116 英寸屏幕背后，RGB MiniLED evo 在红、绿、蓝三种光源之外加入了青色。表现一片海水时，背光系统由此多了一种可以直接调节的颜色。Hi-View AI Engine RGB 配合背光控制来重现色调之间的渐变，适合对照观察水面从蓝色过渡到浅青色时的层次。",
           "image": "assets/exhibits/hisense_tv.jpg",
+          "imageExtra": "assets/exhibits/hisense-extra.jpg",
+          "imageExtraSource": "https://www.hisense.com/us/en/tv/ux-series/hisense-116-ux-series-rgb-miniled-google-tv-116uxs",
           "source": "https://www.hisense-usa.com/ces-2026/tv-2026"
         },
         {
@@ -113,6 +119,8 @@
           "tags": ["Micro RGB", "三色背光", "HDR"],
           "description": "三星在展会上用 130 英寸级 R95H 演示 Micro RGB 技术。屏幕背后的微型红、绿、蓝 LED 提供三色光源，图像处理引擎再根据画面调整色彩和对比度。夜景尤其适合观察这种配合：灯牌需要鲜明的色彩，旁边的暗巷还得保留纹理。显示表面的防眩光处理则减轻了环境光反射的干扰。",
           "image": "assets/exhibits/samsung_rgb.jpg",
+          "imageExtra": "assets/exhibits/samsung-extra.jpg",
+          "imageExtraSource": "https://news.samsung.com/global/samsung-unveils-worlds-first-130-inch-micro-rgb-tv-featuring-next-generation-color-and-bold-new-design",
           "source": "https://news.samsung.com/us/samsung-unveils-worlds-first-130-inch-class-micro-rgb-tv-next-generation-color-bold-new-design/"
         },
         {
@@ -127,6 +135,7 @@
           "tags": ["端侧算力", "Intel 18A", "NPU"],
           "description": "代号 Panther Lake 的第三代酷睿 Ultra 在 CES 2026 正式亮相，计算芯片采用 Intel 18A 制程。以视频会议为例，CPU 可以运行会议应用，GPU 负责图形显示，支持 NPU 的软件则能把部分 AI 效果交给专用单元处理。高配型号的 NPU 可达 50 TOPS，为本地推理提供了独立的计算资源。",
           "image": "assets/exhibits/intel_aipc.jpg",
+          "model3d": "assets/models/intel.glb",
           "source": "https://www.intel.com/content/www/us/en/newsroom/news/artificial-intelligence/ces-2026-intel-core-ultra-series-3-debut-first-built-on-intel-18a.html"
         },
         { "id": "display-to-intro", "type": "jump", "label": "返回序厅", "target": "hall_intro", "yaw": -2.35, "pitch": -0.22 },
@@ -152,6 +161,8 @@
           "tags": ["智能座舱", "车端 AI", "跨域计算"],
           "description": "一辆汽车要同时处理乘客的语音指令、仪表图形和道路感知。高通在 CES 2026 介绍了骁龙数字底盘的多种计算方案。Cockpit Elite 面向高性能座舱，承担显示、交互和车端 AI 工作。在需要把座舱与辅助驾驶整合到同一颗芯片的方案中，高通提供 Ride Flex，让不同安全等级的任务共享计算硬件。",
           "image": "assets/exhibits/qualcomm_cockpit.jpg",
+          "imageExtra": "assets/exhibits/qualcomm-extra.jpg",
+          "imageExtraSource": "https://www.qualcomm.com/automotive/overview",
           "source": "https://www.qualcomm.com/news/releases/2026/01/qualcomm-drives-the-future-of-mobility-with-strong-snapdragon-di"
         },
         {
@@ -166,6 +177,7 @@
           "tags": ["AFEELA 1", "智能座舱", "辅助驾驶"],
           "description": "CES 2026 展出的 AFEELA 1 是在俄亥俄州工厂试制的预生产轿车。驾驶者可以通过车载智能助手与车辆交流，乘客则能使用座舱显示器和音响体验应用与娱乐内容。发布会现场还有一辆单独命名的 AFEELA Prototype 2026，展示了车内空间进一步扩展的另一种车身方案。",
           "image": "assets/exhibits/afeela_car.jpg",
+          "model3d": "assets/models/afeela.glb",
           "source": "https://www.shm-afeela.com/en/assets/pdf/260106%E2%80%97CES2026%E2%80%97ENG.pdf"
         },
         {
@@ -180,6 +192,8 @@
           "tags": ["可穿戴", "语音转写", "AI 摘要"],
           "description": "这枚胶囊形记录器可以夹在衣襟上，在对方知情同意后收录面对面的交流。录音同步至配套服务后，可以转写为文字，再整理成摘要。NotePin 系列的 S 款增加了实体录音键和按键标重点功能：在访谈中听到想追问的一句话，伸手做个标记，整理时就有了回看线索。",
           "image": "assets/exhibits/plaud_notepin.jpg",
+          "imageExtra": "assets/exhibits/plaud-extra.jpg",
+          "imageExtraSource": "https://www.plaud.ai/products/plaud-notepin",
           "source": "https://support.plaud.ai/hc/en-us/articles/53770668740761-What-is-the-difference-between-Plaud-NotePin-and-NotePin-S"
         },
         { "id": "mobility-to-intro", "type": "jump", "label": "返回序厅", "target": "hall_intro", "yaw": -2.35, "pitch": -0.22 },

@@ -75,6 +75,18 @@ h1,h2,p{margin:0}.brand h1{font-size:clamp(15px,1.36vw,21px);font-weight:750;let
 .detail-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}
 #narrate{width:auto;height:auto;min-height:35px;padding:8px 12px;color:#cbfaff;border-color:#43808b;background:#13323e}
 #speech-note{font-size:12px;line-height:1.55;color:#afc3cc;margin-top:8px}
+#media{position:relative}
+#media.has-model{height:clamp(210px,40dvh,350px)}
+#exhibit-photos,#photo-slot,#exhibit-model{position:absolute;inset:0}
+#photo-slot{pointer-events:none}
+#exhibit-model{pointer-events:none}
+.exhibit-viewer{display:block;width:100%;height:100%;pointer-events:auto;--poster-color:transparent;--progress-bar-color:#75eaff;--progress-bar-height:2px}
+.exhibit-viewer.loading-model{visibility:hidden;pointer-events:none}
+.media-controls{position:absolute;display:flex;align-items:center;gap:6px}
+.model-controls{top:12px;left:12px}
+.photo-controls{bottom:10px;right:10px}
+.media-controls button,.media-controls a,#model-status{padding:6px 9px;border:1px solid #496d79;border-radius:5px;background:#081820eb;color:#d6f1f6;font-size:12px;line-height:1.35;text-decoration:none}
+.media-controls :is(button,a):hover,.media-controls :is(button,a):focus-visible{color:var(--acid);border-color:var(--acid)}
 @media(max-width:680px),(max-height:540px){#floor-map{width:190px;bottom:44px}#map-toggle{padding:7px 9px;font-size:12px}}
 .picking #viewer,.picking .psv-container,.picking .psv-canvas-container{cursor:crosshair}.picking .psv-markers,.picking .surface-marks{visibility:hidden}
 .glass,dialog{border:1px solid #526776;background:#111e2af2;backdrop-filter:blur(18px);box-shadow:0 12px 40px #02091260}

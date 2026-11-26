@@ -426,6 +426,116 @@ byId("narrate").onclick = () => {
 detail.addEventListener("close", stopNarration);
 window.addEventListener("pagehide", stopNarration);
 
+let modelViewerReady;
+let disposeExhibitMedia = () => {};
+detail.addEventListener("close", () => {
+  if (!detail.open) disposeExhibitMedia();
+});
+
+function showExhibitMedia(spot) {
+  disposeExhibitMedia();
+  const controller = new AbortController();
+  const { signal } = controller;
+  const media = byId("media"), photos = byId("exhibit-photos"), placeholder = byId("placeholder");
+  const modelSlot = byId("exhibit-model"), toggle = byId("media-toggle"), status = byId("model-status");
+  const photoSlot = byId("photo-slot"), controls = byId("photo-controls");
+  const next = byId("photo-next"), credit = byId("photo-credit");
+  const images = [null, null];
+  let selected = 0, model = null, modelUrl = null, request = null, modelVisible = false, timeout = 0;
+
+  media.classList.toggle("has-model", Boolean(spot.model3d));
+  toggle.hidden = controls.hidden = status.hidden = credit.hidden = true;
+  photos.hidden = false;
+  placeholder.hidden = false;
+  photoSlot.replaceChildren();
+  function paintPhoto() {
+    const index = images[selected] ? selected : 1 - selected;
+    const image = images[index];
+    if (image) photoSlot.replaceChildren(image);
+    placeholder.hidden = Boolean(image);
+    controls.hidden = !images[1];
+    next.hidden = !images[0] || !images[1];
+    next.textContent = index === 0 ? "查看补充图 · 1/2" : "返回主图 · 2/2";
+    credit.hidden = index !== 1 || !spot.imageExtraSource;
+    if (!credit.hidden) credit.href = spot.imageExtraSource;
+  }
+  next.onclick = () => { selected = 1 - selected; paintPhoto(); };
+  [spot.image, spot.imageExtra].forEach((src, index) => {
+    if (!src) return;
+    loadImage(src).then(image => {
+      if (signal.aborted) return;
+      image.id = "photo";
+      image.alt = index === 0 ? spot.title : spot.title + "补充产品图";
+      images[index] = image;
+      paintPhoto();
+    }).catch(() => { /* Keep any loaded photo or the exhibit's placeholder. */ });
+  });
+
+  function switchMode(showModel) {
+    modelVisible = showModel;
+    photos.hidden = showModel;
+    model.hidden = !showModel;
+    model.classList.remove("loading-model");
+    model.toggleAttribute("auto-rotate", showModel && !motionReduced.matches);
+    toggle.textContent = showModel ? "切换回实拍图" : "切换到 3D";
+  }
+  function fallbackToPhoto() {
+    clearTimeout(timeout);
+    request?.abort();
+    model?.remove();
+    model = null;
+    if (modelUrl) URL.revokeObjectURL(modelUrl);
+    modelUrl = null;
+    photos.hidden = false;
+    status.hidden = toggle.hidden = true;
+    media.classList.remove("has-model");
+  }
+  disposeExhibitMedia = () => {
+    controller.abort();
+    fallbackToPhoto();
+    toggle.onclick = next.onclick = null;
+    photoSlot.replaceChildren();
+  };
+  if (!spot.model3d) return;
+
+  status.hidden = false;
+  request = new AbortController();
+  timeout = setTimeout(fallbackToPhoto, 45000);
+  modelViewerReady ||= loadModelViewer().then(() => Boolean(customElements.get("model-viewer"))).catch(() => false);
+  const modelFile = fetch(spot.model3d, { signal: request.signal }).then(async response => {
+    if (!response.ok) return null;
+    const blob = await response.blob();
+    if (await blob.slice(0, 4).text() !== "glTF") return null;
+    return blob;
+  });
+  Promise.all([modelViewerReady, modelFile]).then(([available, blob]) => {
+    if (signal.aborted || status.hidden) return;
+    if (!available || !blob) { fallbackToPhoto(); return; }
+    modelUrl = URL.createObjectURL(blob);
+    model = document.createElement("model-viewer");
+    model.className = "exhibit-viewer loading-model";
+    model.setAttribute("alt", spot.title + "的 3D 模型，可拖拽旋转并滚动缩放");
+    model.setAttribute("camera-controls", "");
+    model.setAttribute("camera-orbit", "30deg 70deg auto");
+    model.setAttribute("loading", "eager");
+    model.setAttribute("rotation-per-second", "13deg");
+    model.setAttribute("shadow-intensity", "1");
+    model.setAttribute("shadow-softness", ".85");
+    model.setAttribute("touch-action", "pan-y");
+    model.setAttribute("interaction-prompt", "none");
+    model.addEventListener("error", fallbackToPhoto, { signal });
+    model.addEventListener("load", () => {
+      clearTimeout(timeout);
+      status.hidden = true;
+      toggle.hidden = false;
+      switchMode(true);
+    }, { once: true, signal });
+    toggle.onclick = () => switchMode(!modelVisible);
+    model.setAttribute("src", modelUrl);
+    modelSlot.replaceChildren(model);
+  }).catch(() => { if (!signal.aborted) fallbackToPhoto(); });
+}
+
 function openExhibit(spot) {
   setCruise(false);
   stopNarration();
@@ -441,16 +551,8 @@ function openExhibit(spot) {
   if (spot.source) byId("source").href = spot.source;
   byId("placeholder-name").textContent = spot.title;
   byId("placeholder-code").textContent = current.english.toUpperCase();
-  const oldPhoto = byId("photo"), photo = new Image();
-  photo.id = "photo"; photo.alt = spot.title; photo.hidden = true;
-  byId("placeholder").hidden = false; oldPhoto.replaceWith(photo);
-  photo.onload = () => {
-    if (!photo.isConnected) return;
-    photo.hidden = false; byId("placeholder").hidden = true;
-  };
-  photo.onerror = () => { photo.hidden = true; };
-  if (spot.image) photo.src = spot.image;
   detail.showModal(); byId("close").focus();
+  showExhibitMedia(spot);
 }
 
 function activate(spot) {

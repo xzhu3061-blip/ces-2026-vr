@@ -13,6 +13,11 @@
   <script defer src="vendor/three.js"></script>
   <script defer src="vendor/core.js"></script>
   <script defer src="vendor/markers.js"></script>
+  <script>
+    const loadModelViewer = () =>
+      import("https://cdn.jsdelivr.net/npm/@google/model-viewer@4.1.0/dist/model-viewer.min.js")
+        .catch(() => import("./vendor/model-viewer.min.js"));
+  </script>
   <script defer src="js/app.js"></script>
 </head>
 <body>
@@ -87,7 +92,21 @@
   </footer>
   <dialog id="detail" aria-labelledby="detail-title">
     <div class="detail-shell"><button id="close" class="square" title="关闭详情" aria-label="关闭详情"><svg><use href="#i-close"/></svg></button>
-    <div id="media"><img id="photo" alt="" hidden><div id="placeholder"><span id="placeholder-code"></span><strong id="placeholder-name"></strong></div></div>
+    <div id="media">
+      <div id="exhibit-photos">
+        <div id="photo-slot"></div>
+        <div id="placeholder"><span id="placeholder-code"></span><strong id="placeholder-name"></strong></div>
+        <div id="photo-controls" class="media-controls photo-controls" hidden>
+          <button id="photo-next" type="button"></button>
+          <a id="photo-credit" target="_blank" rel="noopener noreferrer" hidden>图片来源 ↗</a>
+        </div>
+      </div>
+      <div id="exhibit-model"></div>
+      <div class="media-controls model-controls">
+        <span id="model-status" role="status" hidden>正在加载 3D 模型…</span>
+        <button id="media-toggle" type="button" aria-controls="exhibit-model exhibit-photos" hidden></button>
+      </div>
+    </div>
     <div class="detail-body"><small id="detail-brand"></small><h2 id="detail-title"></h2><div id="tags"></div><p id="description"></p>
       <div class="detail-actions"><button id="narrate" class="tool" type="button">AI 语音讲解</button><a id="source" target="_blank" rel="noopener noreferrer">品牌资料 ↗</a></div>
       <p id="speech-note" role="status" hidden></p></div></div>
